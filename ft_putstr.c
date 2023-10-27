@@ -1,39 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwilun <dwilun@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 15:04:49 by dwilun            #+#    #+#             */
-/*   Updated: 2023/10/27 09:22:01 by dwilun           ###   ########.fr       */
+/*   Created: 2023/10/13 14:54:48 by dwilun            #+#    #+#             */
+/*   Updated: 2023/10/25 17:14:57 by dwilun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+int	ft_putstr(char *s)
 {
-	va_list	argl;
-	int		i;
-	int		count;
-
-	va_start(argl, str);
-	i = 0;
-	count = 0;
-	if (!str || !*str)
-		return (0);
-	while (str[i] != '\0')
+	if (s == NULL)
 	{
-		if (str[i] == '%')
-			count += ft_conv_printf(argl, str[++i]);
-		else
-		{
-			ft_putchar(str[i]);
-			count++;
-		}
-		i++;
+		write(1, "(null)", 6);
+		return (6);
 	}
-	va_end(argl);
-	return (count);
+	write(1, s, ft_strlen(s));
+	return (ft_strlen(s));
 }
+/*
+int main() {
+    int fd = 1; // 1 rappresenta stdout (il terminale)
+    char *message = "Ciao, mondo!";
+
+    ft_putstr_fd(message, fd);
+
+    return 0;
+}
+*/

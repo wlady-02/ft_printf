@@ -1,39 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_b.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dwilun <dwilun@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/23 15:04:49 by dwilun            #+#    #+#             */
-/*   Updated: 2023/10/27 09:22:01 by dwilun           ###   ########.fr       */
+/*   Created: 2023/10/24 09:15:12 by dwilun            #+#    #+#             */
+/*   Updated: 2023/10/25 16:52:29 by dwilun           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_printf(const char *str, ...)
+int	ft_putnbr_b(unsigned int n, char *base, unsigned int len)
 {
-	va_list	argl;
-	int		i;
 	int		count;
 
-	va_start(argl, str);
-	i = 0;
 	count = 0;
-	if (!str || !*str)
-		return (0);
-	while (str[i] != '\0')
+	if (n >= len)
 	{
-		if (str[i] == '%')
-			count += ft_conv_printf(argl, str[++i]);
-		else
-		{
-			ft_putchar(str[i]);
-			count++;
-		}
-		i++;
+		count += ft_putnbr_b(n / len, base, len);
+		n %= len;
 	}
-	va_end(argl);
+	if (n < len)
+	{
+		ft_putchar(base[n % len]);
+		count++;
+	}
 	return (count);
 }
+
+/*
+#include <stdlib.h>
+int main(int ac, char **av)
+{
+	(void)ac;
+	(void)av;
+	if(ac == 1)
+	{
+		printf("coglione argv\n");
+		return (1);
+	}
+	ft_putnbr_b(atoi(av[1]), av[2], atoi(av[3]));
+	printf("\n%x", atoi(av[1]));
+}
+*/
